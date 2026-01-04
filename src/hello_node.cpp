@@ -7,6 +7,7 @@
 
 using namespace std::chrono_literals;
 
+
 /*
  * TODO: Create a Class named 'HelloNode' that inherits from rclcpp::Node.
  * Requirements:
@@ -21,12 +22,17 @@ public:
   HelloNode()
   : Node("hello_world_node")
   {
-    // TODO: Initialize the timer here
+timer_ = this->create_wall_timer(
+      1000ms,
+      std::bind(&HelloNode::timer_callback, this)
+  );
   }
 
 private:
-  // TODO: Define the timer_callback function here
-
+void timer_callback()
+  {
+    RCLCPP_INFO(this->get_logger(), "Hello, World!");
+  }
   rclcpp::TimerBase::SharedPtr timer_;
 };
 
